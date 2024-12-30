@@ -90,6 +90,8 @@ class Margay
 		float getTemp(temp_val val = therm_val);
 		float getBatVoltage();
 		float getBatPer();
+		float getVRef(); 				// Function is just for testing purposes. Function definition in Margay.cpp
+		float getBatSense();				// same as above, this time testing BatSense_Pin instead of VRef_Pin
 
 		void initADC(uint8_t desiredResolution);
 		void resetWDT();
