@@ -655,6 +655,16 @@ float Margay::getBatVoltage()
 	return BatVoltage;
 }
 
+float Margay::getVRef()
+{
+	return analogRead(VRef_Pin);
+}
+
+float Margay::getBatSense()
+{
+	return analogRead(BatSense_Pin);
+}
+
 float Margay::getBatPer()
 {
 	//NOTE: Fit developed for Duracell AA, should work well for most alkalines, but no gaurentee given on accuracy
@@ -691,12 +701,14 @@ String Margay::getOnBoardVals()
 
 	// delay(10);
 	float BatVoltage = getBatVoltage(); //Get battery voltage, Include voltage divider in math
+	float VRef_1023 = getVRef();
+	float BatSense_1023 = getBatSense();
 
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
 	float RTCTemp = RTC.getTemp();  //Get Temp from RTC
 	getTime(); //FIX!
 	if(Model< MODEL_2v0) return LogTimeDate + "," + String(TempData) + "," + String(RTCTemp) + "," + String(BatVoltage) + ",";
-	else return LogTimeDate + "," + String(EnviroSense.GetString()) + String(RTCTemp) + "," + String(BatVoltage) + ",";
+	else return LogTimeDate + "," + String(EnviroSense.GetString()) + String(RTCTemp) + "," + String(BatVoltage) + "," + String(VRef_1023) + "," + String(BatSense_1023);
 }
 
 float Margay::tempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25)
